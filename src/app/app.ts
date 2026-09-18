@@ -9,7 +9,7 @@ import { WeatherData } from './models/weather.model';
   selector: 'app-root',
   imports: [SearchBar, WeatherCard],
   templateUrl: './app.html',
-  styleUrl: './app.scss',
+  styleUrl: './app.css',
 })
 export class App {
   private readonly weatherService = inject(WeatherService);

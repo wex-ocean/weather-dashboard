@@ -3,7 +3,7 @@ import { Component, output, signal } from '@angular/core';
 @Component({
   selector: 'app-search-bar',
   templateUrl: './search-bar.html',
-  styleUrl: './search-bar.scss',
+  styleUrl: './search-bar.css',
 })
 export class SearchBar {
   readonly search = output<string>();

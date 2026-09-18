@@ -6,7 +6,7 @@ import { WeatherData } from '../../models/weather.model';
   selector: 'app-weather-card',
   imports: [DecimalPipe, TitleCasePipe],
   templateUrl: './weather-card.html',
-  styleUrl: './weather-card.scss',
+  styleUrl: './weather-card.css',
 })
 export class WeatherCard {
   readonly weather = input.required<WeatherData>();
