@@ -5,3 +5,14 @@ export interface WeatherData {
   wind: { speed: number };
   sys: { country: string };
 }
+    
+export interface ForecastItem {
+  dt: number;
+  dt_txt: string;
+  main: { temp: number };
+  weather: { description: string; icon: string }[];
+}
+
+export interface ForecastResponse {
+  list: ForecastItem[];
+}
