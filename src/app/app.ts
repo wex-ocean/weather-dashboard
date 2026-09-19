@@ -18,6 +18,33 @@ export class App {
   protected readonly loading = signal(false);
   protected readonly error = signal('');
 
+  private readonly storageKey = 'recent-cities';
+  protected readonly recent = signal<string[]>(this.loadRecent());
+
+  private loadRecent(): string[] {
+    try {
+      const raw: unknown = JSON.parse(localStorage.getItem(this.storageKey) ?? '[]');
+      return Array.isArray(raw)
+        ? raw.filter((c): c is string => typeof c === 'string').slice(0, 5)
+        : [];
+    } catch {
+      return [];
+    }
+  }
+
+  private saveRecent(city: string): void {
+    const list = [
+      city,
+      ...this.recent().filter((c) => c.toLowerCase() !== city.toLowerCase()),
+    ].slice(0, 5);
+    this.recent.set(list);
+    try {
+      localStorage.setItem(this.storageKey, JSON.stringify(list));
+    } catch {
+      // storage unavailable, ignore
+    }
+  }
+
   protected onSearch(city: string): void {
     this.loading.set(true);
     this.error.set('');
