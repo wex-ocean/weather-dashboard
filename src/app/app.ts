@@ -3,16 +3,19 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { SearchBar } from './components/search-bar/search-bar';
 import { WeatherCard } from './components/weather-card/weather-card';
 import { WeatherService } from './services/weather';
-import { WeatherData } from './models/weather.model';
+import { WeatherData, ForecastItem } from './models/weather.model';
+import { forkJoin } from 'rxjs';
+import { Forecast } from './components/forecast/forecast';
 
 @Component({
   selector: 'app-root',
-  imports: [SearchBar, WeatherCard],
+  imports: [SearchBar, WeatherCard, Forecast],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
 export class App {
   private readonly weatherService = inject(WeatherService);
+  protected readonly forecast = signal<ForecastItem[]>([]);   
 
   protected readonly weather = signal<WeatherData | null>(null);
   protected readonly loading = signal(false);
@@ -49,13 +52,19 @@ export class App {
     this.loading.set(true);
     this.error.set('');
 
-    this.weatherService.getWeather(city).subscribe({
-      next: (data) => {
-        this.weather.set(data);
+    forkJoin({
+      weather: this.weatherService.getWeather(city),
+      forecast: this.weatherService.getForecast(city),
+    }).subscribe({
+      next: ({ weather, forecast }) => {
+        this.weather.set(weather);
+        this.forecast.set(forecast);
+        this.saveRecent(weather.name);
         this.loading.set(false);
       },
       error: (err: HttpErrorResponse) => {
         this.weather.set(null);
+        this.forecast.set([]);
         this.error.set(err.status === 404 ? 'City not found.' : 'Something went wrong. Try again.');
         this.loading.set(false);
       },

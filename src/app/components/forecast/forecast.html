@@ -1,0 +1,12 @@
+<section class="forecast">
+  @for (day of days(); track day.dt) {
+    <div class="day">
+      <p>{{ day.dt * 1000 | date: 'EEE' }}</p>
+      <img
+        [src]="'https://openweathermap.org/img/wn/' + day.weather[0].icon + '.png'"
+        [alt]="day.weather[0].description"
+      />
+      <p>{{ day.main.temp | number: '1.0-0' }}°C</p>
+    </div>
+  }
+</section>

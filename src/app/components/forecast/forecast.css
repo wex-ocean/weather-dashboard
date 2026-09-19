@@ -1,0 +1,16 @@
+.forecast {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.day {
+  padding: 0.75rem 0.25rem;
+  border-radius: 8px;
+  background: #f1f5f9;
+
+  p {
+    margin: 0;
+  }
+}
