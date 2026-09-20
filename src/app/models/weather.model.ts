@@ -16,3 +16,5 @@ export interface ForecastItem {
 export interface ForecastResponse {
   list: ForecastItem[];
 }
+
+export type Unit = 'C' | 'F';
