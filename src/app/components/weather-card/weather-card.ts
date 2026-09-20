@@ -1,13 +1,15 @@
 import { Component, input } from '@angular/core';
-import { DecimalPipe, TitleCasePipe } from '@angular/common';
-import { WeatherData } from '../../models/weather.model';
+import { TitleCasePipe } from '@angular/common';
+import { Unit, WeatherData } from '../../models/weather.model';
+import { TempPipe } from '../../pipes/temp-pipe';
 
 @Component({
   selector: 'app-weather-card',
-  imports: [DecimalPipe, TitleCasePipe],
+  imports: [TitleCasePipe, TempPipe],
   templateUrl: './weather-card.html',
   styleUrl: './weather-card.css',
 })
 export class WeatherCard {
   readonly weather = input.required<WeatherData>();
+  readonly unit = input<Unit>('C');
 }

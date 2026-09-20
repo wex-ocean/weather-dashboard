@@ -4,10 +4,12 @@
     [src]="'https://openweathermap.org/img/wn/' + weather().weather[0].icon + '@2x.png'"
     [alt]="weather().weather[0].description"
   />
-  <p class="temp">{{ weather().main.temp | number: '1.0-0' }}°C</p>
+  <!-- <p class="temp">{{ weather().main.temp | number: '1.0-0' }}°C</p> -->
+  <p class="temp">{{ weather().main.temp | temp: unit() }}</p>
   <p class="desc">{{ weather().weather[0].description | titlecase }}</p>
   <ul class="details">
-    <li>Feels like: {{ weather().main.feels_like | number: '1.0-0' }}°C</li>
+    <!-- <li>Feels like: {{ weather().main.feels_like | number: '1.0-0' }}°C</li> -->
+    <li>Feels like: {{ weather().main.feels_like | temp: unit() }}</li>
     <li>Humidity: {{ weather().main.humidity }}%</li>
     <li>Wind: {{ weather().wind.speed }} m/s</li>
     <li>Pressure: {{ weather().main.pressure }} hPa</li>
