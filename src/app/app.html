@@ -1,6 +1,11 @@
 <main class="container">
   <h1>Weather Dashboard</h1>
+  <button type="button" class="unit-toggle" (click)="toggleUnit()">
+    Switch to °{{ unit() === 'C' ? 'F' : 'C' }}
+  </button>
+
   <app-search-bar (search)="onSearch($event)" />
+  <button type="button" class="location-btn" (click)="useMyLocation()">📍 Use my location</button>
 
   @if (recent().length) {
     <div class="recent">
@@ -9,9 +14,7 @@
       }
     </div>
   }
-  <button type="button" class="unit-toggle" (click)="toggleUnit()">
-    Switch to °{{ unit() === 'C' ? 'F' : 'C' }}
-  </button>
+
   @if (loading()) {
     <p class="status">Loading...</p>
   } @else if (error()) {

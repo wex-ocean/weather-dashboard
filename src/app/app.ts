@@ -70,10 +70,44 @@ export class App {
       },
     });
   }
-
   protected readonly unit = signal<Unit>('C');
 
   protected toggleUnit(): void {
     this.unit.update((u) => (u === 'C' ? 'F' : 'C'));
+  }
+  protected useMyLocation(): void {
+    if (!navigator.geolocation) {
+      this.error.set('Geolocation is not supported by your browser.');
+      return;
+    }
+
+    this.loading.set(true);
+    this.error.set('');
+
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
+        forkJoin({
+          weather: this.weatherService.getWeatherByCoords(coords.latitude, coords.longitude),
+          forecast: this.weatherService.getForecastByCoords(coords.latitude, coords.longitude),
+        }).subscribe({
+          next: ({ weather, forecast }) => {
+            this.weather.set(weather);
+            this.forecast.set(forecast);
+            this.saveRecent(weather.name);
+            this.loading.set(false);
+          },
+          error: () => {
+            this.weather.set(null);
+            this.forecast.set([]);
+            this.error.set('Something went wrong. Try again.');
+            this.loading.set(false);
+          },
+        });
+      },
+      () => {
+        this.loading.set(false);
+        this.error.set('Location access denied.');
+      },
+    );
   }
 }
