@@ -9,13 +9,15 @@
       }
     </div>
   }
-
+  <button type="button" class="unit-toggle" (click)="toggleUnit()">
+    Switch to °{{ unit() === 'C' ? 'F' : 'C' }}
+  </button>
   @if (loading()) {
     <p class="status">Loading...</p>
   } @else if (error()) {
     <p class="status error">{{ error() }}</p>
   } @else if (weather(); as data) {
-    <app-weather-card [weather]="data" />
-    <app-forecast [days]="forecast()" />
+    <app-weather-card [weather]="data" [unit]="unit()" />
+    <app-forecast [days]="forecast()" [unit]="unit()" />
   }
 </main>

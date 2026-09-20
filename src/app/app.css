@@ -27,3 +27,12 @@
     cursor: pointer;
   }
 }
+
+.unit-toggle {
+  justify-self: end;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+}

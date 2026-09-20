@@ -3,7 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { SearchBar } from './components/search-bar/search-bar';
 import { WeatherCard } from './components/weather-card/weather-card';
 import { WeatherService } from './services/weather';
-import { WeatherData, ForecastItem } from './models/weather.model';
+import { WeatherData, ForecastItem, Unit } from './models/weather.model';
 import { forkJoin } from 'rxjs';
 import { Forecast } from './components/forecast/forecast';
 
@@ -15,7 +15,7 @@ import { Forecast } from './components/forecast/forecast';
 })
 export class App {
   private readonly weatherService = inject(WeatherService);
-  protected readonly forecast = signal<ForecastItem[]>([]);   
+  protected readonly forecast = signal<ForecastItem[]>([]);
 
   protected readonly weather = signal<WeatherData | null>(null);
   protected readonly loading = signal(false);
@@ -69,5 +69,11 @@ export class App {
         this.loading.set(false);
       },
     });
+  }
+
+  protected readonly unit = signal<Unit>('C');
+
+  protected toggleUnit(): void {
+    this.unit.update((u) => (u === 'C' ? 'F' : 'C'));
   }
 }
