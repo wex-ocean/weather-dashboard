@@ -6,7 +6,7 @@
         [src]="'https://openweathermap.org/img/wn/' + day.weather[0].icon + '.png'"
         [alt]="day.weather[0].description"
       />
-      <p>{{ day.main.temp | number: '1.0-0' }}°C</p>
+      <p>{{ day.main.temp | temp: unit() }}</p>
     </div>
   }
 </section>
