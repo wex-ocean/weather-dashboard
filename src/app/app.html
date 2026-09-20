@@ -1,6 +1,7 @@
 <main class="container">
   <h1>Weather Dashboard</h1>
   <app-search-bar (search)="onSearch($event)" />
+
   @if (recent().length) {
     <div class="recent">
       @for (city of recent(); track city) {
@@ -15,5 +16,6 @@
     <p class="status error">{{ error() }}</p>
   } @else if (weather(); as data) {
     <app-weather-card [weather]="data" />
+    <app-forecast [days]="forecast()" />
   }
 </main>
